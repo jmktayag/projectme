@@ -1,10 +1,13 @@
+/* Import Tailwind CSS - This brings in all the Tailwind utility classes */
 @import "tailwindcss";
 
+/* Define light theme variables - These are the default colors for light mode */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffffff;  /* White background */
+  --foreground: #171717; /* Dark gray text */
 }
 
+/* Set theme colors and fonts - These variables are used throughout the app */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,23 +15,27 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Dark mode overrides - These colors are used when the user's system is in dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0a0a; /* Near black background */
+    --foreground: #ededed; /* Light gray text */
   }
 }
 
+/* Base body styles - These styles apply to the entire page */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind directives - These tell Tailwind to generate its utility classes */
+@tailwind base;      /* Base styles like reset and defaults */
+@tailwind components; /* Component classes */
+@tailwind utilities;  /* Utility classes like padding, margin, etc. */
 
+/* Ripple effect animation for interactive elements */
 .ripple {
   position: absolute;
   border-radius: 50%;
@@ -37,6 +44,7 @@ body {
   background-color: rgba(255, 255, 255, 0.4);
 }
 
+/* Keyframes for ripple animation - Defines how the ripple effect grows and fades */
 @keyframes ripple {
   to {
     transform: scale(4);

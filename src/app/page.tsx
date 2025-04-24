@@ -12,6 +12,6 @@ export default function Home() {
       <ProjectsSection />
       <BlogSection />
       <ContactSection />
-    </main>
+      </main>
   );
 }

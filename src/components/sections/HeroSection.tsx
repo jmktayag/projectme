@@ -3,10 +3,15 @@
 import { motion } from 'framer-motion';
 import RippleButton from '../common/RippleButton';
 
+/* 
+ * HeroSection Component
+ * The main landing section of the website
+ * Features animated text and call-to-action buttons
+ */
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
-      {/* Background shapes */}
+      {/* Background shapes for visual interest */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           initial={{ opacity: 0 }}
@@ -22,8 +27,9 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Content */}
+      {/* Main content container */}
       <div className="max-w-4xl mx-auto text-center z-10">
+        {/* Animated heading */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -33,6 +39,7 @@ const HeroSection = () => {
           Hi, I'm Mc Kein.
         </motion.h1>
         
+        {/* Animated description */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -42,12 +49,14 @@ const HeroSection = () => {
           Full-stack developer, woodworker, and avid cyclist who loves to vlog about adventures.
         </motion.p>
 
+        {/* Animated button container */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
+          {/* Call-to-action buttons */}
           <RippleButton href="#projects" variant="primary">
             View Projects
           </RippleButton>
