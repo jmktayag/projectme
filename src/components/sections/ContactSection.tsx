@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import RippleButton from '../ui/RippleButton';
+import RippleButton from '../common/RippleButton';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -101,7 +101,7 @@ const ContactSection = () => {
 
               <RippleButton
                 type="submit"
-                primary
+                variant="primary"
                 className="w-full"
                 disabled={status === 'sending'}
               >

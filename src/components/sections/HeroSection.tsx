@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import RippleButton from './ui/RippleButton';
+import RippleButton from '../common/RippleButton';
 
 const HeroSection = () => {
   return (
@@ -48,10 +48,10 @@ const HeroSection = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <RippleButton href="#projects" primary>
+          <RippleButton href="#projects" variant="primary">
             View Projects
           </RippleButton>
-          <RippleButton href="/resume.pdf">
+          <RippleButton href="/resume.pdf" variant="outline">
             Download Résumé
           </RippleButton>
         </motion.div>
