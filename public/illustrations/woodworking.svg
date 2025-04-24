@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g id="woodworker">
+    <!-- Workbench -->
+    <rect x="100" y="500" width="600" height="50" fill="#8B4513"/>
+    <rect x="150" y="550" width="50" height="150" fill="#8B4513"/>
+    <rect x="600" y="550" width="50" height="150" fill="#8B4513"/>
+    
+    <!-- Wood piece being worked on -->
+    <rect x="200" y="480" width="400" height="20" fill="#DEB887"/>
+    
+    <!-- Tools -->
+    <g id="tools" class="animate-tools">
+      <!-- Hammer -->
+      <rect x="300" y="400" width="10" height="60" fill="#4A5568" transform="rotate(-45 300 400)"/>
+      <rect x="280" y="380" width="30" height="40" fill="#4A5568" transform="rotate(-45 280 380)"/>
+      
+      <!-- Saw -->
+      <path d="M500 380 L600 420 L600 400 L500 360 Z" fill="#2563EB"/>
+      <path d="M500 360 L500 380 L600 420 L600 400 Z" fill="#1E40AF"/>
+      
+      <!-- Chisel -->
+      <rect x="400" y="420" width="60" height="10" fill="#4A5568"/>
+      <path d="M460 415 L480 425 L460 435 Z" fill="#4A5568"/>
+    </g>
+    
+    <!-- Wood shavings -->
+    <g id="shavings" class="animate-shavings">
+      <path d="M350 460 Q370 450, 390 460" stroke="#DEB887" stroke-width="2" fill="none"/>
+      <path d="M360 470 Q380 460, 400 470" stroke="#DEB887" stroke-width="2" fill="none"/>
+      <path d="M370 480 Q390 470, 410 480" stroke="#DEB887" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Animation -->
+  <style>
+    .animate-tools {
+      animation: work 2s ease-in-out infinite;
+    }
+    .animate-shavings {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes work {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+  </style>
+</svg> 

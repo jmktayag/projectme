@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import RippleButton from '../common/RippleButton';
 import { useSpring, animated } from '@react-spring/web';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 /* 
  * HeroSection Component
@@ -20,7 +22,41 @@ const stars = Array.from({ length: 50 }, (_, i) => ({
   delay: Math.random() * 2, // Random delay for twinkling
 }));
 
+// Illustration data
+const illustrations = [
+  {
+    id: 1,
+    src: '/illustrations/cycling.svg',
+    alt: 'Cycling Illustration',
+  },
+  {
+    id: 2,
+    src: '/illustrations/woodworking.svg',
+    alt: 'Woodworking Illustration',
+  },
+  {
+    id: 3,
+    src: '/illustrations/programmer.svg',
+    alt: 'Coding Illustration',
+  }
+];
+
 const HeroSection = () => {
+  // State for current illustration
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Auto-advance slideshow
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!isAnimating) {
+        setCurrentIndex((prev) => (prev + 1) % illustrations.length);
+      }
+    }, 5000); // Change illustration every 5 seconds
+
+    return () => clearInterval(timer);
+  }, [isAnimating]);
+
   // Animation for the floating gradient movement
   const gradientProps = useSpring({
     from: { backgroundPosition: '0% 50%' },
@@ -114,64 +150,91 @@ const HeroSection = () => {
       </div>
 
       {/* Main content container */}
-      <div className="relative max-w-4xl mx-auto text-center z-10">
-        {/* Animated heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-6"
-        >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
-            <motion.span
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              Hi, I'm{" "}
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-gradient"
-            >
-              Mc Kein
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              .
-            </motion.span>
-          </h1>
-        </motion.div>
-        
-        {/* Animated description */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto"
-        >
-          Full-stack developer, woodworker, and avid cyclist who loves to vlog about adventures.
-        </motion.p>
+      <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center z-10">
+        {/* Text content */}
+        <div className="text-center md:text-left">
+          {/* Animated heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-6"
+          >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Hi, I'm{" "}
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-gradient"
+              >
+                Mc Kein
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                .
+              </motion.span>
+            </h1>
+          </motion.div>
+          
+          {/* Animated description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-xl md:text-2xl text-gray-300 mb-12 max-w-xl"
+          >
+            Full-stack developer, woodworker, and avid cyclist who loves to vlog about adventures.
+          </motion.p>
 
-        {/* Animated button container */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <RippleButton href="#projects" variant="primary">
-            View Projects
-          </RippleButton>
-          <RippleButton href="/resume.pdf" variant="outline">
-            Download Résumé
-          </RippleButton>
-        </motion.div>
+          {/* Animated button container */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1 }}
+            className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4"
+          >
+            <RippleButton href="#projects" variant="primary">
+              View Projects
+            </RippleButton>
+            <RippleButton href="/resume.pdf" variant="outline">
+              Download Résumé
+            </RippleButton>
+          </motion.div>
+        </div>
+
+        {/* Illustration Slideshow */}
+        <div className="relative w-full max-w-lg mx-auto md:ml-auto aspect-square">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5 }}
+              onAnimationStart={() => setIsAnimating(true)}
+              onAnimationComplete={() => setIsAnimating(false)}
+              className="absolute inset-0"
+            >
+              <Image
+                src={illustrations[currentIndex].src}
+                alt={illustrations[currentIndex].alt}
+                fill
+                className="object-contain"
+                priority
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Animated gradient overlay */}
