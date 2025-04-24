@@ -1,50 +1,159 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import RippleButton from '../common/RippleButton';
+import { useSpring, animated } from '@react-spring/web';
 
 /* 
  * HeroSection Component
  * The main landing section of the website
- * Features animated text and call-to-action buttons
+ * Features animated text and gradient background effects
  */
+
+// Star positions - we'll create a grid of stars with slight randomness
+const stars = Array.from({ length: 50 }, (_, i) => ({
+  id: i,
+  x: `${Math.random() * 100}%`,
+  y: `${Math.random() * 100}%`,
+  size: Math.random() * 2 + 1, // Random size between 1-3px
+  duration: Math.random() * 2 + 1, // Random duration between 1-3s
+  delay: Math.random() * 2, // Random delay for twinkling
+}));
+
 const HeroSection = () => {
+  // Animation for the floating gradient movement
+  const gradientProps = useSpring({
+    from: { backgroundPosition: '0% 50%' },
+    to: { backgroundPosition: '100% 50%' },
+    config: { duration: 8000 },
+    loop: true,
+  });
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
-      {/* Background shapes for visual interest */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden bg-[#0A0B14]">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Stars */}
+        {stars.map((star) => (
+          <motion.div
+            key={star.id}
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{
+              left: star.x,
+              top: star.y,
+              width: star.size,
+              height: star.size,
+            }}
+            animate={{
+              opacity: [0.2, 0.8, 0.2],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: star.duration,
+              delay: star.delay,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+
+        {/* Floating elements */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
+          animate={{ 
+            y: [-20, 20, -20],
+            x: [-10, 10, -10],
+            opacity: [0.2, 0.3, 0.2]
+          }}
+          transition={{ 
+            duration: 5,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+          className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-blue-500/20 blur-xl"
         />
         <motion.div
+          animate={{ 
+            y: [20, -20, 20],
+            x: [10, -10, 10],
+            opacity: [0.15, 0.25, 0.15]
+          }}
+          transition={{ 
+            duration: 7,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+          className="absolute bottom-1/4 left-1/3 w-24 h-24 rounded-full bg-indigo-500/20 blur-xl"
+        />
+        
+        {/* Additional floating element */}
+        <motion.div
+          animate={{ 
+            y: [-15, 15, -15],
+            x: [-15, 15, -15],
+            opacity: [0.1, 0.2, 0.1]
+          }}
+          transition={{ 
+            duration: 6,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+          className="absolute top-1/2 right-1/3 w-40 h-40 rounded-full bg-purple-500/15 blur-xl"
+        />
+        
+        {/* Animated grid pattern */}
+        <motion.div 
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-100 dark:bg-red-900/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"
+          animate={{ opacity: 0.07 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)',
+            backgroundSize: '32px 32px',
+          }}
         />
       </div>
 
       {/* Main content container */}
-      <div className="max-w-4xl mx-auto text-center z-10">
+      <div className="relative max-w-4xl mx-auto text-center z-10">
         {/* Animated heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-6"
         >
-          Hi, I'm Mc Kein.
-        </motion.h1>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Hi, I'm{" "}
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-gradient"
+            >
+              Mc Kein
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              .
+            </motion.span>
+          </h1>
+        </motion.div>
         
         {/* Animated description */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto"
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto"
         >
           Full-stack developer, woodworker, and avid cyclist who loves to vlog about adventures.
         </motion.p>
@@ -53,10 +162,9 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 1 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          {/* Call-to-action buttons */}
           <RippleButton href="#projects" variant="primary">
             View Projects
           </RippleButton>
@@ -65,6 +173,23 @@ const HeroSection = () => {
           </RippleButton>
         </motion.div>
       </div>
+
+      {/* Animated gradient overlay */}
+      <animated.div
+        style={{
+          ...gradientProps,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'linear-gradient(45deg, rgba(37, 99, 235, 0.05), rgba(30, 64, 175, 0.03))',
+          backgroundSize: '400% 400%',
+          opacity: 0.8,
+          zIndex: 1,
+          pointerEvents: 'none',
+        }}
+      />
     </section>
   );
 };
