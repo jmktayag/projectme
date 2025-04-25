@@ -8,6 +8,7 @@ import Image from 'next/image';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 100], [0, 1]);
 
@@ -22,26 +23,48 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      
+      // Get all sections
+      const sections = document.querySelectorAll('section[id]');
+      
+      // Find the section in view
+      let foundActive = false;
+      sections.forEach(section => {
+        const sectionElement = section as HTMLElement;
+        const sectionTop = sectionElement.offsetTop - 100;
+        const sectionHeight = sectionElement.offsetHeight;
+        const scrollPosition = window.scrollY;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          setActiveSection(section.id);
+          foundActive = true;
+        }
+      });
+
+      // If no section is in view and we're at the top, set home as active
+      if (!foundActive && window.scrollY < 100) {
+        setActiveSection('home');
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    // Add smooth scrolling behavior to the html element
     document.documentElement.style.scrollBehavior = 'smooth';
     
-    // Function to handle hash changes and scroll adjustments
     const handleHashChange = () => {
       if (window.location.hash) {
         const element = document.querySelector(window.location.hash);
         if (element) {
-          const navHeight = 64; // Navbar height
+          const navHeight = 64;
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - navHeight;
           
-          // Delay the scroll slightly to ensure proper positioning
           setTimeout(() => {
             window.scrollTo({
               top: offsetPosition,
@@ -52,15 +75,11 @@ const Navbar = () => {
       }
     };
 
-    // Add event listeners
     window.addEventListener('hashchange', handleHashChange);
-    
-    // Handle initial hash on page load
     if (window.location.hash) {
       handleHashChange();
     }
 
-    // Cleanup
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
       document.documentElement.style.scrollBehavior = '';
@@ -123,20 +142,31 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={handleClick}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                    isScrolled 
-                      ? 'text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400' 
-                      : 'text-white/90 hover:text-white'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const isActive = activeSection === item.href.substring(1);
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={handleClick}
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 relative ${
+                      isScrolled 
+                        ? 'text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400' 
+                        : 'text-white/90 hover:text-white'
+                    }`}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeIndicator"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-400"
+                        initial={false}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
@@ -192,20 +222,31 @@ const Navbar = () => {
               ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md' 
               : 'bg-black/90 backdrop-blur-md'
           }`}>
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={handleClick}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                  isScrolled 
-                    ? 'text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400' 
-                    : 'text-white/90 hover:text-white'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.substring(1);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={handleClick}
+                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 relative ${
+                    isScrolled 
+                      ? 'text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400' 
+                      : 'text-white/90 hover:text-white'
+                  }`}
+                >
+                  {item.name}
+                  {isActive && (
+                    <motion.span
+                      layoutId="mobileActiveIndicator"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-blue-400 rounded-r"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </motion.div>
       )}
@@ -213,4 +254,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;
