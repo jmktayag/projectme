@@ -12,14 +12,14 @@ import { useState, useEffect } from 'react';
  * Features animated text and gradient background effects
  */
 
-// Star positions - we'll create a grid of stars with slight randomness
-const stars = Array.from({ length: 50 }, (_, i) => ({
+// Stable initial values for stars
+const initialStars = Array.from({ length: 50 }, (_, i) => ({
   id: i,
-  x: `${Math.random() * 100}%`,
-  y: `${Math.random() * 100}%`,
-  size: Math.random() * 2 + 1, // Random size between 1-3px
-  duration: Math.random() * 2 + 1, // Random duration between 1-3s
-  delay: Math.random() * 2, // Random delay for twinkling
+  x: `${(i * 2) % 100}%`,
+  y: `${(i * 3) % 100}%`,
+  size: 1.5,
+  duration: 2,
+  delay: 0,
 }));
 
 // Illustration data
@@ -42,9 +42,25 @@ const illustrations = [
 ];
 
 const HeroSection = () => {
-  // State for current illustration
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [stars, setStars] = useState(initialStars);
+  const [mounted, setMounted] = useState(false);
+
+  // Initialize client-side only features after mount
+  useEffect(() => {
+    setMounted(true);
+    
+    // Update stars with random values after mount
+    setStars(initialStars.map(star => ({
+      ...star,
+      x: `${Math.random() * 100}%`,
+      y: `${Math.random() * 100}%`,
+      size: Math.random() * 2 + 1,
+      duration: Math.random() * 2 + 1,
+      delay: Math.random() * 2,
+    })));
+  }, []);
 
   // Auto-advance slideshow
   useEffect(() => {
@@ -52,7 +68,7 @@ const HeroSection = () => {
       if (!isAnimating) {
         setCurrentIndex((prev) => (prev + 1) % illustrations.length);
       }
-    }, 5000); // Change illustration every 5 seconds
+    }, 5000);
 
     return () => clearInterval(timer);
   }, [isAnimating]);
@@ -63,6 +79,7 @@ const HeroSection = () => {
     to: { backgroundPosition: '100% 50%' },
     config: { duration: 8000 },
     loop: true,
+    pause: !mounted, // Pause animation until mounted
   });
 
   return (
@@ -80,59 +97,59 @@ const HeroSection = () => {
               width: star.size,
               height: star.size,
             }}
-            animate={{
+            animate={mounted ? {
               opacity: [0.2, 0.8, 0.2],
               scale: [1, 1.2, 1],
-            }}
-            transition={{
+            } : undefined}
+            transition={mounted ? {
               duration: star.duration,
               delay: star.delay,
               repeat: Infinity,
               ease: "easeInOut"
-            }}
+            } : undefined}
           />
         ))}
 
         {/* Floating elements */}
         <motion.div
-          animate={{ 
+          animate={mounted ? { 
             y: [-20, 20, -20],
             x: [-10, 10, -10],
             opacity: [0.2, 0.3, 0.2]
-          }}
-          transition={{ 
+          } : undefined}
+          transition={mounted ? { 
             duration: 5,
             ease: "easeInOut",
             repeat: Infinity,
-          }}
+          } : undefined}
           className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-blue-500/20 blur-xl"
         />
         <motion.div
-          animate={{ 
+          animate={mounted ? { 
             y: [20, -20, 20],
             x: [10, -10, 10],
             opacity: [0.15, 0.25, 0.15]
-          }}
-          transition={{ 
+          } : undefined}
+          transition={mounted ? { 
             duration: 7,
             ease: "easeInOut",
             repeat: Infinity,
-          }}
+          } : undefined}
           className="absolute bottom-1/4 left-1/3 w-24 h-24 rounded-full bg-indigo-500/20 blur-xl"
         />
         
         {/* Additional floating element */}
         <motion.div
-          animate={{ 
+          animate={mounted ? { 
             y: [-15, 15, -15],
             x: [-15, 15, -15],
             opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ 
+          } : undefined}
+          transition={mounted ? { 
             duration: 6,
             ease: "easeInOut",
             repeat: Infinity,
-          }}
+          } : undefined}
           className="absolute top-1/2 right-1/3 w-40 h-40 rounded-full bg-purple-500/15 blur-xl"
         />
         
@@ -193,7 +210,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="text-xl md:text-2xl text-gray-300 mb-12 max-w-xl"
           >
-            Full-stack developer, woodworker, and avid cyclist who loves to vlog about adventures.
+            A curious builder with a love for software, bikes, and sawdust.
           </motion.p>
 
           {/* Animated button container */}
@@ -238,21 +255,23 @@ const HeroSection = () => {
       </div>
 
       {/* Animated gradient overlay */}
-      <animated.div
-        style={{
-          ...gradientProps,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: 'linear-gradient(45deg, rgba(37, 99, 235, 0.05), rgba(30, 64, 175, 0.03))',
-          backgroundSize: '400% 400%',
-          opacity: 0.8,
-          zIndex: 1,
-          pointerEvents: 'none',
-        }}
-      />
+      {mounted && (
+        <animated.div
+          style={{
+            ...gradientProps,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'linear-gradient(45deg, rgba(37, 99, 235, 0.05), rgba(30, 64, 175, 0.03))',
+            backgroundSize: '400% 400%',
+            opacity: 0.8,
+            zIndex: 1,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
     </section>
   );
 };

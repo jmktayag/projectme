@@ -1,7 +1,7 @@
 'use client';
 
 // Import necessary dependencies
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import Link from 'next/link';
 import { ButtonProps } from '../../types';
 
@@ -9,7 +9,7 @@ import { ButtonProps } from '../../types';
 interface RippleEffect {
   x: number;  // X position of the ripple
   y: number;  // Y position of the ripple
-  id: number; // Unique identifier for each ripple
+  id: string; // Unique identifier for each ripple
 }
 
 /* Extend ButtonProps to include optional href for links */
@@ -34,6 +34,7 @@ export const RippleButton: React.FC<RippleButtonProps> = ({
 }) => {
   // State to track active ripple effects
   const [ripples, setRipples] = useState<RippleEffect[]>([]);
+  const baseId = useId();
 
   // Clean up ripples after animation completes
   useEffect(() => {
@@ -44,7 +45,7 @@ export const RippleButton: React.FC<RippleButtonProps> = ({
         );
       }, 1000);
       return acc;
-    }, {} as { [key: number]: NodeJS.Timeout });
+    }, {} as { [key: string]: NodeJS.Timeout });
 
     return () => {
       Object.values(cleanup).forEach((timeoutId) => clearTimeout(timeoutId));
@@ -58,7 +59,7 @@ export const RippleButton: React.FC<RippleButtonProps> = ({
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    setRipples([...ripples, { x, y, id: Date.now() }]);
+    setRipples([...ripples, { x, y, id: `${baseId}-${ripples.length}` }]);
     onClick?.(event as React.MouseEvent<HTMLButtonElement>);
   };
 
