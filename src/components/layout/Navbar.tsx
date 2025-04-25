@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,16 +68,33 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo and name section */}
           <div className="flex-shrink-0">
             <Link 
               href="#home" 
-              className="flex items-center"
+              className="flex items-center group"
               onClick={handleClick}
             >
-              <span className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-200">
-                Your Logo
-              </span>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="relative w-24 h-24"
+              >
+                <Image
+                  src="/logo/mk-logo.svg"
+                  alt="MK Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </motion.div>
+              <motion.span 
+                className="ml-1 text-xl font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Mc Kein Tayag
+              </motion.span>
             </Link>
           </div>
           
