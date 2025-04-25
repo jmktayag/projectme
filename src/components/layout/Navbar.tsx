@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 100], [0, 1]);
 
   const navItems = [
     { name: 'Home', href: '#home' },
@@ -15,6 +18,15 @@ const Navbar = () => {
     { name: 'Blog', href: '#blog' },
     { name: 'Contact', href: '#contact' },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     // Add smooth scrolling behavior to the html element
@@ -64,7 +76,11 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed w-full bg-white dark:bg-gray-900 shadow-sm z-50 transition-colors duration-200"
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg' 
+          : 'bg-transparent'
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -88,7 +104,11 @@ const Navbar = () => {
                 />
               </motion.div>
               <motion.span 
-                className="ml-1 text-xl font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200"
+                className={`ml-1 text-xl font-medium transition-colors duration-200 ${
+                  isScrolled 
+                    ? 'text-gray-700 dark:text-gray-300' 
+                    : 'text-white'
+                }`}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
@@ -106,7 +126,11 @@ const Navbar = () => {
                   key={item.name}
                   href={item.href}
                   onClick={handleClick}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                    isScrolled 
+                      ? 'text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400' 
+                      : 'text-white/90 hover:text-white'
+                  }`}
                 >
                   {item.name}
                 </Link>
@@ -118,7 +142,11 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400 focus:outline-none transition-colors duration-200"
+              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors duration-200 ${
+                isScrolled 
+                  ? 'text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400' 
+                  : 'text-white/90 hover:text-white'
+              }`}
               aria-expanded={isOpen}
               aria-label="Toggle navigation menu"
             >
@@ -157,13 +185,21 @@ const Navbar = () => {
           exit={{ opacity: 0, y: -10 }}
           className="md:hidden"
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-900 transition-colors duration-200">
+          <div className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 transition-colors duration-200 ${
+            isScrolled 
+              ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md' 
+              : 'bg-black/90 backdrop-blur-md'
+          }`}>
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={handleClick}
-                className="block text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+                  isScrolled 
+                    ? 'text-gray-700 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400' 
+                    : 'text-white/90 hover:text-white'
+                }`}
               >
                 {item.name}
               </Link>
