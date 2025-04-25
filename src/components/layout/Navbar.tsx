@@ -98,7 +98,9 @@ const Navbar = () => {
                 <Image
                   src="/logo/mk-logo.svg"
                   alt="MK Logo"
-                  fill
+                  width={96}
+                  height={96}
+                  quality={100}
                   className="object-contain"
                   priority
                 />

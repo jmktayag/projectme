@@ -83,7 +83,7 @@ const HeroSection = () => {
   });
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden bg-[#0A0B14]">
+    <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden bg-[#0A0B14] pt-24 md:pt-0">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Stars */}
