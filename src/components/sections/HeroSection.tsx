@@ -166,7 +166,7 @@ const HeroSection = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                Hi, I'm{" "}
+                Hi, I&apos;m{" "}
               </motion.span>
               <motion.span
                 initial={{ opacity: 0, scale: 0.9 }}

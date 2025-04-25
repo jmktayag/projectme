@@ -59,7 +59,7 @@ export const RippleButton: React.FC<RippleButtonProps> = ({
     const y = event.clientY - rect.top;
 
     setRipples([...ripples, { x, y, id: Date.now() }]);
-    onClick?.(event as any);
+    onClick?.(event as React.MouseEvent<HTMLButtonElement>);
   };
 
   // Size classes for different button sizes

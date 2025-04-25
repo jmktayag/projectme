@@ -29,6 +29,7 @@ const ContactSection = () => {
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error('Form submission error:', error);
       setStatus('error');
     }
   };
@@ -146,10 +147,10 @@ const ContactSection = () => {
             {/* Contact section header */}
             <div>
               <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                Let's Connect
+                Let&apos;s Connect
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+                I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
               </p>
             </div>
 
