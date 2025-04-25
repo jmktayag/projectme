@@ -2,15 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 100], [0, 1]);
 
   const navItems = [
     { name: 'Home', href: '#home' },
