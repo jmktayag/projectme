@@ -1,10 +1,141 @@
 'use client'; // Indicates this is a client-side component
 
+/**
+ * AboutSection Component
+ * 
+ * A responsive section that displays personal information, skills, and expertise.
+ * Features:
+ * - Animated entrance effects using Framer Motion
+ * - Interactive skill cards with hover effects
+ * - Responsive grid layout
+ * - Dark mode support
+ * - Accessible tooltips
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <AboutSection />
+ * ```
+ */
+
 // Import motion component from framer-motion for animations
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FaGitAlt, FaCode, FaRobot } from 'react-icons/fa';
 import { SiSwift, SiFirebase, SiReact, SiSalesforce, SiPython, SiFigma, SiCanva, SiJenkins, SiApple, SiAndroid, SiXcode, SiGoogle, SiOpenai } from 'react-icons/si';
+import { SkillCategory, SkillIconProps, SkillCardProps } from '@/types';
+
+// Animation variants for consistent motion effects
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+};
+
+const fadeInLeft = {
+  initial: { opacity: 0, x: -20 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.5, delay: 0.2 }
+};
+
+const fadeInRight = {
+  initial: { opacity: 0, x: 20 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.5, delay: 0.4 }
+};
+
+// Skill card data structure for better maintainability
+const skillCategories: Record<string, SkillCategory> = {
+  frontend: {
+    title: 'Frontend',
+    description: 'Crafting clean and responsive user interfaces',
+    skills: [
+      { icon: SiApple, name: 'iOS', color: 'text-gray-900 dark:text-white' },
+      { icon: SiAndroid, name: 'Android', color: 'text-green-500' },
+      { icon: SiSwift, name: 'Swift', color: 'text-orange-500' },
+      { icon: FaCode, name: 'Objective-C', color: 'text-blue-500' },
+      { icon: SiFirebase, name: 'Firebase', color: 'text-yellow-500' },
+      { icon: SiReact, name: 'React Native', color: 'text-blue-500' }
+    ]
+  },
+  backend: {
+    title: 'Backend',
+    description: 'Powering apps with robust, scalable logic',
+    skills: [
+      { icon: SiFirebase, name: 'Firebase Cloud Functions', color: 'text-yellow-500' },
+      { icon: SiSalesforce, name: 'Salesforce', color: 'text-blue-500' },
+      { icon: SiPython, name: 'Python', color: 'text-yellow-500' }
+    ]
+  },
+  design: {
+    title: 'Design',
+    description: 'Blending creativity with usability',
+    skills: [
+      { icon: SiFigma, name: 'Figma', color: 'text-purple-500' },
+      { icon: SiCanva, name: 'Canva', color: 'text-blue-500' }
+    ]
+  },
+  tools: {
+    title: 'Tools',
+    description: 'Supporting dev workflows & automation',
+    skills: [
+      { icon: SiXcode, name: 'Xcode Server', color: 'text-blue-500' },
+      { icon: SiJenkins, name: 'Jenkins', color: 'text-red-500' },
+      { icon: FaCode, name: 'VS Code', color: 'text-blue-500' },
+      { icon: FaRobot, name: 'Cursor AI', color: 'text-purple-500' },
+      { icon: SiGoogle, name: 'Google AI', color: 'text-blue-500' },
+      { icon: SiOpenai, name: 'ChatGPT', color: 'text-green-500' },
+      { icon: FaGitAlt, name: 'Git', color: 'text-orange-500' }
+    ]
+  }
+};
+
+/**
+ * SkillIcon Component
+ * 
+ * Renders an individual skill icon with hover effects and tooltip
+ * 
+ * @param {Object} props - Component props
+ * @param {IconType} props.icon - React icon component
+ * @param {string} props.name - Skill name for tooltip
+ * @param {string} props.color - Tailwind color class
+ */
+const SkillIcon = ({ icon: Icon, name, color }: SkillIconProps) => (
+  <motion.div 
+    whileHover={{ scale: 1.2 }} 
+    className="relative group"
+  >
+    <Icon className={`text-2xl ${color}`} />
+    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+      {name}
+    </span>
+  </motion.div>
+);
+
+/**
+ * SkillCard Component
+ * 
+ * Renders a category of skills with title and description
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.title - Category title
+ * @param {string} props.description - Category description
+ * @param {Array} props.skills - Array of skill objects
+ */
+const SkillCard = ({ title, description, skills }: SkillCardProps) => (
+  <motion.div 
+    whileHover={{ y: -5 }}
+    className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm"
+  >
+    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
+    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{description}</p>
+    <div className="flex flex-wrap gap-4">
+      {skills.map((skill, index) => (
+        <SkillIcon key={index} {...skill} />
+      ))}
+    </div>
+  </motion.div>
+);
 
 /* 
  * AboutSection Component
@@ -14,15 +145,16 @@ import { SiSwift, SiFirebase, SiReact, SiSalesforce, SiPython, SiFigma, SiCanva,
 const AboutSection = () => {
   return (
     // Main section container with responsive padding and background colors
-    <section id="about" className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800">
+    <section 
+      id="about" 
+      className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800"
+      aria-label="About Me"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Animated section title */}
         <motion.h2 
-          // Animation settings for the title
-          initial={{ opacity: 0, y: 20 }} // Start invisible and 20px below
-          whileInView={{ opacity: 1, y: 0 }} // Animate to visible when in view
-          transition={{ duration: 0.5 }} // Animation duration
-          viewport={{ once: true }} // Only animate once
+          {...fadeInUp}
+          viewport={{ once: true }}
           className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12"
         >
           About Me
@@ -31,16 +163,14 @@ const AboutSection = () => {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Left column - About text */}
           <motion.div 
-            initial={{ opacity: 0, x: -20 }} // Start invisible and offset left
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }} // Slight delay after title
+            {...fadeInLeft}
             viewport={{ once: true }}
             className="space-y-6"
           >
             <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden">
               <Image
                 src="/profile.png"
-                alt="Profile picture"
+                alt="Mc Kein Tayag"
                 fill
                 className="object-cover"
                 priority
@@ -67,6 +197,7 @@ const AboutSection = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              aria-label="Contact Me"
             >
               Let&apos;s Work Together
             </motion.a>
@@ -74,159 +205,13 @@ const AboutSection = () => {
 
           {/* Right column - Skills grid */}
           <motion.div 
-            initial={{ opacity: 0, x: 20 }} // Start invisible and offset right
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }} // Longer delay for staggered effect
+            {...fadeInRight}
             viewport={{ once: true }}
             className="grid grid-cols-2 gap-4"
           >
-            <motion.div 
-              whileHover={{ y: -5 }}
-              className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm"
-            >
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Frontend</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Crafting clean and responsive user interfaces</p>
-              <div className="flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiApple className="text-2xl text-gray-900 dark:text-white" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    iOS
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiAndroid className="text-2xl text-green-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Android
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiSwift className="text-2xl text-orange-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Swift
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <FaCode className="text-2xl text-blue-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Objective-C
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiFirebase className="text-2xl text-yellow-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Firebase
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiReact className="text-2xl text-blue-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    React Native
-                  </span>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              whileHover={{ y: -5 }}
-              className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm"
-            >
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Backend</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Powering apps with robust, scalable logic</p>
-              <div className="flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiFirebase className="text-2xl text-yellow-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Firebase
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiSalesforce className="text-2xl text-blue-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Salesforce
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiPython className="text-2xl text-yellow-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Python
-                  </span>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              whileHover={{ y: -5 }}
-              className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm"
-            >
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Design</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Blending creativity with usability</p>
-              <div className="flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiFigma className="text-2xl text-purple-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Figma
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiCanva className="text-2xl text-blue-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Canva
-                  </span>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              whileHover={{ y: -5 }}
-              className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm"
-            >
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Tools</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Supporting dev workflows & automation</p>
-              <div className="flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiXcode className="text-2xl text-blue-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Xcode Server
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiJenkins className="text-2xl text-red-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Jenkins
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <FaCode className="text-2xl text-blue-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    VS Code
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <FaRobot className="text-2xl text-purple-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Cursor AI
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiGoogle className="text-2xl text-blue-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Google AI
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <SiOpenai className="text-2xl text-green-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    ChatGPT
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.2 }} className="relative group">
-                  <FaGitAlt className="text-2xl text-orange-500" />
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    Git
-                  </span>
-                </motion.div>
-              </div>
-            </motion.div>
+            {Object.values(skillCategories).map((category, index) => (
+              <SkillCard key={index} {...category} />
+            ))}
           </motion.div>
         </div>
       </div>

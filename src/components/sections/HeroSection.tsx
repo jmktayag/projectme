@@ -6,6 +6,34 @@ import { useSpring, animated } from '@react-spring/web';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
+// Types for the component
+interface Star {
+  id: number;
+  x: string;
+  y: string;
+  size: number;
+  duration: number;
+  delay: number;
+}
+
+interface Illustration {
+  id: number;
+  src: string;
+  alt: string;
+}
+
+interface FloatingElement {
+  className: string;
+  animation: {
+    y: number[];
+    x: number[];
+    opacity: number[];
+  };
+  transition: {
+    duration: number;
+  };
+}
+
 /* 
  * HeroSection Component
  * The main landing section of the website
@@ -13,7 +41,7 @@ import { useState, useEffect } from 'react';
  */
 
 // Stable initial values for stars
-const initialStars = Array.from({ length: 50 }, (_, i) => ({
+const initialStars: Star[] = Array.from({ length: 50 }, (_, i) => ({
   id: i,
   x: `${(i * 2) % 100}%`,
   y: `${(i * 3) % 100}%`,
@@ -23,7 +51,7 @@ const initialStars = Array.from({ length: 50 }, (_, i) => ({
 }));
 
 // Illustration data
-const illustrations = [
+const illustrations: Illustration[] = [
   {
     id: 1,
     src: '/illustrations/cycling.svg',
@@ -41,11 +69,43 @@ const illustrations = [
   }
 ];
 
+// Floating elements configuration
+const floatingElements: FloatingElement[] = [
+  {
+    className: "absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-blue-500/20 blur-xl",
+    animation: {
+      y: [-20, 20, -20],
+      x: [-10, 10, -10],
+      opacity: [0.2, 0.3, 0.2]
+    },
+    transition: { duration: 5 }
+  },
+  {
+    className: "absolute bottom-1/4 left-1/3 w-24 h-24 rounded-full bg-indigo-500/20 blur-xl",
+    animation: {
+      y: [20, -20, 20],
+      x: [10, -10, 10],
+      opacity: [0.15, 0.25, 0.15]
+    },
+    transition: { duration: 7 }
+  },
+  {
+    className: "absolute top-1/2 right-1/3 w-40 h-40 rounded-full bg-purple-500/15 blur-xl",
+    animation: {
+      y: [-15, 15, -15],
+      x: [-15, 15, -15],
+      opacity: [0.1, 0.2, 0.1]
+    },
+    transition: { duration: 6 }
+  }
+];
+
 const HeroSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [stars, setStars] = useState(initialStars);
+  const [stars, setStars] = useState<Star[]>(initialStars);
   const [mounted, setMounted] = useState(false);
+  const [, setImageError] = useState(false);
 
   // Initialize client-side only features after mount
   useEffect(() => {
@@ -79,11 +139,21 @@ const HeroSection = () => {
     to: { backgroundPosition: '100% 50%' },
     config: { duration: 8000 },
     loop: true,
-    pause: !mounted, // Pause animation until mounted
+    pause: !mounted,
   });
 
+  // Handle image loading error
+  const handleImageError = () => {
+    setImageError(true);
+    // Fallback to the first illustration if there's an error
+    setCurrentIndex(0);
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden bg-[#0A0B14] pt-24 md:pt-0">
+    <section 
+      className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden bg-[#0A0B14] pt-24 md:pt-0"
+      aria-label="Hero Section"
+    >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Stars */}
@@ -107,51 +177,24 @@ const HeroSection = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
+            aria-hidden="true"
           />
         ))}
 
         {/* Floating elements */}
-        <motion.div
-          animate={mounted ? { 
-            y: [-20, 20, -20],
-            x: [-10, 10, -10],
-            opacity: [0.2, 0.3, 0.2]
-          } : undefined}
-          transition={mounted ? { 
-            duration: 5,
-            ease: "easeInOut",
-            repeat: Infinity,
-          } : undefined}
-          className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-blue-500/20 blur-xl"
-        />
-        <motion.div
-          animate={mounted ? { 
-            y: [20, -20, 20],
-            x: [10, -10, 10],
-            opacity: [0.15, 0.25, 0.15]
-          } : undefined}
-          transition={mounted ? { 
-            duration: 7,
-            ease: "easeInOut",
-            repeat: Infinity,
-          } : undefined}
-          className="absolute bottom-1/4 left-1/3 w-24 h-24 rounded-full bg-indigo-500/20 blur-xl"
-        />
-        
-        {/* Additional floating element */}
-        <motion.div
-          animate={mounted ? { 
-            y: [-15, 15, -15],
-            x: [-15, 15, -15],
-            opacity: [0.1, 0.2, 0.1]
-          } : undefined}
-          transition={mounted ? { 
-            duration: 6,
-            ease: "easeInOut",
-            repeat: Infinity,
-          } : undefined}
-          className="absolute top-1/2 right-1/3 w-40 h-40 rounded-full bg-purple-500/15 blur-xl"
-        />
+        {floatingElements.map((element, index) => (
+          <motion.div
+            key={index}
+            animate={mounted ? element.animation : undefined}
+            transition={mounted ? { 
+              ...element.transition,
+              ease: "easeInOut",
+              repeat: Infinity,
+            } : undefined}
+            className={element.className}
+            aria-hidden="true"
+          />
+        ))}
         
         {/* Animated grid pattern */}
         <motion.div 
@@ -163,6 +206,7 @@ const HeroSection = () => {
             backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)',
             backgroundSize: '32px 32px',
           }}
+          aria-hidden="true"
         />
       </div>
 
@@ -220,17 +264,29 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1 }}
             className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4"
           >
-            <RippleButton href="#projects" variant="primary">
+            <RippleButton 
+              href="#projects" 
+              variant="primary"
+              aria-label="View my projects"
+            >
               View Projects
             </RippleButton>
-            <RippleButton href="/resume.pdf" variant="outline">
+            <RippleButton 
+              href="/resume.pdf" 
+              variant="outline"
+              aria-label="Download my resume"
+            >
               Download Résumé
             </RippleButton>
           </motion.div>
         </div>
 
         {/* Illustration Slideshow */}
-        <div className="relative w-full max-w-lg mx-auto md:ml-auto aspect-square">
+        <div 
+          className="relative w-full max-w-lg mx-auto md:ml-auto aspect-square"
+          role="region"
+          aria-label="Illustration slideshow"
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -248,6 +304,7 @@ const HeroSection = () => {
                 fill
                 className="object-contain"
                 priority
+                onError={handleImageError}
               />
             </motion.div>
           </AnimatePresence>

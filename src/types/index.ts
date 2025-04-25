@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconType } from 'react-icons';
 
 // Navigation Types
 export interface NavLink {
@@ -33,4 +34,29 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'small' | 'medium' | 'large';
   isLoading?: boolean;
+}
+
+// Skill Types
+export interface Skill {
+  icon: IconType;
+  name: string;
+  color: string;
+}
+
+export interface SkillCategory {
+  title: string;
+  description: string;
+  skills: Skill[];
+}
+
+export interface SkillIconProps {
+  icon: IconType;
+  name: string;
+  color: string;
+}
+
+export interface SkillCardProps {
+  title: string;
+  description: string;
+  skills: Skill[];
 } 
