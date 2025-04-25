@@ -87,7 +87,7 @@ const HeroSection = () => {
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Stars */}
-        {stars.map((star) => (
+        {mounted && stars.map((star) => (
           <motion.div
             key={star.id}
             className="absolute w-1 h-1 bg-white rounded-full"
@@ -97,16 +97,16 @@ const HeroSection = () => {
               width: star.size,
               height: star.size,
             }}
-            animate={mounted ? {
+            animate={{
               opacity: [0.2, 0.8, 0.2],
               scale: [1, 1.2, 1],
-            } : undefined}
-            transition={mounted ? {
+            }}
+            transition={{
               duration: star.duration,
               delay: star.delay,
               repeat: Infinity,
               ease: "easeInOut"
-            } : undefined}
+            }}
           />
         ))}
 
