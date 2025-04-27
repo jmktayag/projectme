@@ -9,11 +9,14 @@ const ProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Get unique categories from projects
-  const categories = Array.from(new Set(projects.map(project => project.category)));
+  // Get categories from projects object keys
+  const categories = Object.keys(projects) as Array<keyof typeof projects>;
+  
+  // Get all projects as a flat array
+  const allProjects = Object.values(projects).flat();
   
   // Filter and sort projects based on selected category
-  const filteredProjects = projects
+  const filteredProjects = allProjects
     .filter(project => !selectedCategory || project.category === selectedCategory)
     .sort((a, b) => {
       // Featured projects always come first, regardless of category

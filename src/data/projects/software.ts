@@ -1,22 +1,6 @@
-export interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  technologies: string[];
-  image: string;
-  actions?: {
-    label: string;
-    url: string;
-    type?: 'primary' | 'secondary' | 'tertiary' | 'gumroad' | 'appstore';
-    icon?: string;
-  }[];
-  featured?: boolean;
-  category: 'Software Development' | 'Books' | 'Woodworking';
-  projectType: 'personal' | 'professional';
-}
+import { Project } from './types';
 
-export const projects: Project[] = [
+export const softwareProjects: Project[] = [
   {
     id: "project-snuggleScales",
     title: "Snuggle Scales – AI-Powered Interactive Storytelling App",
@@ -24,6 +8,14 @@ export const projects: Project[] = [
     description: "Snuggle Scales is a subscription-based mobile application designed to transform family reading into an interactive and gamified experience.",
     technologies: ["iOS", "Swift", "SwiftUI", "Firebase"],
     image: "/images/projects/snuggle_scales.png",
+    images: [
+      "/images/projects/snuggle-1.png",
+      "/images/projects/snuggle-2.png",
+      "/images/projects/snuggle-3.png",
+      "/images/projects/snuggle-4.png",
+      "/images/projects/snuggle-5.png",
+      "/images/projects/snuggle-6.png"
+    ],
     actions: [
       {
         label: "Download on App Store",
@@ -98,61 +90,23 @@ export const projects: Project[] = [
     projectType: "personal"
   },
   {
-    id: "book-echomind",
-    title: "Mastering ChatGPT: The Smart Way to AI Conversations",
-    subtitle: "An easy-to-follow guide that helps beginners understand and maximize the power of ChatGPT.",
-    description: "An easy-to-follow guide that helps beginners understand and maximize the power of ChatGPT.",
-    technologies: ["AI", "ChatGPT", "Productivity"],
-    image: "/images/projects/mastering.png",
-    actions: [
-      {
-        label: "Buy on Gumroad",
-        url: "https://username.gumroad.com/l/book-one",
-        type: "gumroad"
-      }
+    id: "project-cl",
+    title: "CleanLink Site Master",
+    subtitle: "Mobile Workforce Management App",
+    description: "An app for businesses that have staff working on multiple sites. It integrates seamlessly with CleanLink Software's web-based Site Master application. Use it to assign, schedule, report progress and monitor work at each of your sites. You can also collect data using your own customised forms, such as Quality Audits, Health & Safety Audits, Service and Staff Reviews.",
+    technologies: ["Mobile App", "UI/UX Design", "Material Design", "Objective-C"],
+    image: "/images/projects/cleanlink-1.png",
+    images: [
+      "/images/projects/cleanlink-logo.png"
     ],
-    featured: true,
-    category: "Books",
-    projectType: "personal"
-  },
-  {
-    id: "woodworking-hanging-shelf",
-    title: "Hanging Shelf",
-    subtitle: "A handcrafted hanging shelf made from reclaimed pine wood",
-    description: "A handcrafted hanging shelf made from reclaimed pine wood, showcasing sustainable woodworking practices and rustic design.",
-    technologies: ["Pine", "Hand Tools", "Finishing"],
-    image: "/images/projects/hanging-shelves.jpg",
     actions: [
       {
-        label: "View Gallery",
-        url: "https://woodworking-one-demo.com",
-        type: "primary"
-      },
-      {
-        label: "Order Custom",
-        url: "https://etsy.com/woodworking-one",
-        type: "tertiary"
-      }
-    ],
-    featured: true,
-    category: "Woodworking",
-    projectType: "personal"
-  },
-  {
-    id: "woodworking-rustic-bookshelf",
-    title: "Rustic Bookshelf",
-    subtitle: "A rustic bookshelf made from pine with custom metal brackets and distressed finish",
-    description: "A rustic bookshelf crafted from pine wood, featuring custom metal brackets and a carefully applied distressed finish. This piece combines traditional woodworking techniques with modern design elements to create a unique and functional storage solution.",
-    technologies: ["Pine", "Metal Brackets", "Staining", "Distressing Techniques"],
-    image: "/images/projects/woodworking2.jpg",
-    actions: [
-      {
-        label: "View Details",
-        url: "https://woodworking-two-demo.com",
+        label: "Learn More",
+        url: "#",
         type: "primary"
       }
     ],
-    category: "Woodworking",
-    projectType: "personal"
+    category: "Software Development",
+    projectType: "professional"
   }
 ]; 

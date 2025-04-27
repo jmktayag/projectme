@@ -1,8 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Project } from '@/data/projects';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 interface ProjectModalProps {
   project: Project;
@@ -12,6 +13,44 @@ interface ProjectModalProps {
 
 const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   if (!project) return null;
+  
+  // State for image gallery
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isPortrait, setIsPortrait] = useState(false);
+  
+  // Get all images (primary image + additional images)
+  const allImages = project.images 
+    ? [project.image, ...project.images] 
+    : [project.image];
+  
+  // Check if current image is portrait
+  useEffect(() => {
+    const checkImageOrientation = () => {
+      // Create a temporary image element
+      const tempImg = document.createElement('img');
+      tempImg.src = allImages[currentImageIndex];
+      
+      tempImg.onload = () => {
+        // If height is greater than width, it's portrait
+        setIsPortrait(tempImg.height > tempImg.width);
+      };
+    };
+    
+    checkImageOrientation();
+  }, [currentImageIndex, allImages]);
+  
+  // Navigation functions for image gallery
+  const goToNextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === allImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+  
+  const goToPreviousImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
+    );
+  };
 
   // Function to get button class based on type
   const getButtonClass = (type?: string) => {
@@ -47,7 +86,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   };
 
   // Check if the image URL is external
-  const isExternalImage = project.image.startsWith('http');
+  const isExternalImage = (url: string) => url.startsWith('http');
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -76,22 +115,83 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all relative">
-                <div className="relative w-full pt-[56.25%] overflow-hidden rounded-lg mb-6">
+                {/* Image Gallery */}
+                <div className="relative w-full pt-[56.25%] overflow-hidden rounded-lg mb-6 bg-black">
                   <Image
-                    src={project.image}
-                    alt={`${project.title} screenshot`}
+                    src={allImages[currentImageIndex]}
+                    alt={`${project.title} screenshot ${currentImageIndex + 1}`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                    className="object-cover"
-                    unoptimized={isExternalImage}
+                    className={isPortrait ? "object-contain" : "object-cover"}
+                    unoptimized={isExternalImage(allImages[currentImageIndex])}
                     priority
                   />
+                  
+                  {/* Navigation Arrows - Only show if there are multiple images */}
+                  {allImages.length > 1 && (
+                    <>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToPreviousImage();
+                        }}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeftIcon className="h-6 w-6" />
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToNextImage();
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                        aria-label="Next image"
+                      >
+                        <ChevronRightIcon className="h-6 w-6" />
+                      </button>
+                    </>
+                  )}
+                  
+                  {/* Image Counter */}
+                  {allImages.length > 1 && (
+                    <div className="absolute bottom-3 right-3 bg-black/50 text-white px-2 py-1 rounded-full text-xs">
+                      {currentImageIndex + 1} / {allImages.length}
+                    </div>
+                  )}
+                  
+                  {/* Featured Badge */}
                   {project.featured && (
                     <div className="absolute top-3 right-3 bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-medium">
                       Featured
                     </div>
                   )}
                 </div>
+                
+                {/* Thumbnail Navigation - Only show if there are multiple images */}
+                {allImages.length > 1 && (
+                  <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+                    {allImages.map((img, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`relative w-20 h-12 flex-shrink-0 rounded overflow-hidden bg-black ${
+                          currentImageIndex === index ? 'ring-2 ring-blue-500' : ''
+                        }`}
+                        aria-label={`View image ${index + 1}`}
+                      >
+                        <Image
+                          src={img}
+                          alt={`Thumbnail ${index + 1}`}
+                          fill
+                          sizes="80px"
+                          className="object-contain"
+                          unoptimized={isExternalImage(img)}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
 
                 <div className="flex items-center gap-2 mb-2">
                   <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">
