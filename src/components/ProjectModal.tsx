@@ -1,8 +1,8 @@
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState, useEffect, useMemo } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Project } from '@/data/projects';
+import { Project } from '@/data/projects/types';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 interface ProjectModalProps {
@@ -11,20 +11,29 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
+interface Action {
+  label: string;
+  url: string;
+  type?: string;
+}
+
 const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
-  if (!project) return null;
-  
   // State for image gallery
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPortrait, setIsPortrait] = useState(false);
   
   // Get all images (primary image + additional images)
-  const allImages = project.images 
-    ? [project.image, ...project.images] 
-    : [project.image];
+  const allImages = useMemo(() => 
+    project?.images 
+      ? [project.image, ...project.images] 
+      : [project?.image],
+    [project?.image, project?.images]
+  );
   
   // Check if current image is portrait
   useEffect(() => {
+    if (!allImages.length) return;
+    
     const checkImageOrientation = () => {
       // Create a temporary image element
       const tempImg = document.createElement('img');
@@ -39,6 +48,8 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
     checkImageOrientation();
   }, [currentImageIndex, allImages]);
   
+  if (!project) return null;
+
   // Navigation functions for image gallery
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => 
@@ -71,7 +82,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   };
 
   // Function to render button content based on type
-  const renderButtonContent = (action: any) => {
+  const renderButtonContent = (action: Action) => {
     if (action.type === 'appstore') {
       return (
         <>
@@ -116,7 +127,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
             >
               <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all relative">
                 {/* Image Gallery */}
-                <div className="relative w-full pt-[56.25%] overflow-hidden rounded-lg mb-6 bg-black">
+                <div className="relative w-full pt-[56.25%] overflow-hidden rounded-lg mb-6 bg-gray-900/75 backdrop-blur-sm">
                   <Image
                     src={allImages[currentImageIndex]}
                     alt={`${project.title} screenshot ${currentImageIndex + 1}`}
@@ -135,7 +146,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                           e.stopPropagation();
                           goToPreviousImage();
                         }}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-900/75 backdrop-blur-sm text-white p-2 rounded-full hover:bg-gray-900/90 transition-colors"
                         aria-label="Previous image"
                       >
                         <ChevronLeftIcon className="h-6 w-6" />
@@ -145,7 +156,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                           e.stopPropagation();
                           goToNextImage();
                         }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-900/75 backdrop-blur-sm text-white p-2 rounded-full hover:bg-gray-900/90 transition-colors"
                         aria-label="Next image"
                       >
                         <ChevronRightIcon className="h-6 w-6" />
@@ -155,7 +166,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                   
                   {/* Image Counter */}
                   {allImages.length > 1 && (
-                    <div className="absolute bottom-3 right-3 bg-black/50 text-white px-2 py-1 rounded-full text-xs">
+                    <div className="absolute bottom-3 right-3 bg-gray-900/75 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs">
                       {currentImageIndex + 1} / {allImages.length}
                     </div>
                   )}
@@ -175,7 +186,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`relative w-20 h-12 flex-shrink-0 rounded overflow-hidden bg-black ${
+                        className={`relative w-20 h-12 flex-shrink-0 rounded overflow-hidden bg-gray-900/75 backdrop-blur-sm ${
                           currentImageIndex === index ? 'ring-2 ring-blue-500' : ''
                         }`}
                         aria-label={`View image ${index + 1}`}
@@ -218,7 +229,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.map((tech) => (
+                  {project.technologies.map((tech: string) => (
                     <span
                       key={tech}
                       className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
@@ -233,7 +244,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                 </div>
 
                 <div className="flex flex-wrap gap-3 mt-6">
-                  {project.actions?.map((action, i) => (
+                  {project.actions?.map((action: Action, i: number) => (
                     <Link
                       key={i}
                       href={action.url}

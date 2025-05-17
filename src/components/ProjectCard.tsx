@@ -3,11 +3,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import ProjectModal from './ProjectModal';
-import { Project } from '@/data/projects';
+import { Project } from '@/data/projects/types';
 
 interface ProjectCardProps {
   project: Project;
   index: number;
+}
+
+interface Action {
+  label: string;
+  url: string;
+  type?: string;
 }
 
 const ProjectCard = ({ project, index }: ProjectCardProps) => {
@@ -32,7 +38,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
   };
 
   // Function to render button content based on type
-  const renderButtonContent = (action: any) => {
+  const renderButtonContent = (action: Action) => {
     if (action.type === 'appstore') {
       return (
         <>
@@ -99,7 +105,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           </div>
           
           <div className="flex flex-wrap gap-2 mb-4">
-            {project.technologies.map((tech) => (
+            {project.technologies.map((tech: string) => (
               <span
                 key={tech}
                 className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
@@ -110,7 +116,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           </div>
           
           <div className="flex flex-wrap gap-3 mt-6">
-            {project.actions?.map((action, i) => (
+            {project.actions?.map((action: Action, i: number) => (
               <Link 
                 key={i}
                 href={action.url}

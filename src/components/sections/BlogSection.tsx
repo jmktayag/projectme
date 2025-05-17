@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { BlogCard } from '@/components/blog/BlogCard';
 import { blogPosts } from '@/data/blog-posts';
