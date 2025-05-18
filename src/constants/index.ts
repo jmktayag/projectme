@@ -9,13 +9,16 @@ export const NAV_LINKS = [
 
 // Social Media Links
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/yourusername',
-  linkedin: 'https://linkedin.com/in/yourusername',
-  twitter: 'https://twitter.com/yourusername',
+  github: 'https://github.com/jmktayag',
+  linkedin: 'https://www.linkedin.com/in/mckein-tayag',
+  facebook: 'https://www.facebook.com/j.m.k.t.y.g',
 };
 
 // Contact Information
 export const CONTACT_INFO = {
-  email: 'your.email@example.com',
-  location: 'Your Location',
-}; 
+  email: 'jmktayag@gmail.com',
+  location: 'Manila, Philippines',
+};
+
+// API Keys
+export const RESEND_API_KEY = 're_jdtFuoKz_HEV8gb1VxcnJvrPV6xm1mu9K'; 
