@@ -12,5 +12,5 @@ export interface BlogPost {
   readingTime: string;
   tags: string[];
   featured?: boolean;
-  category: 'Software Development' | 'Personal Growth';
+  category: 'Software Development' | 'Personal Growth' | 'Productivity';
 } 
