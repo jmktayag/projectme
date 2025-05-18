@@ -1,5 +1,3 @@
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
