@@ -2,7 +2,11 @@ export interface BlogPost {
   id: string;
   title: string;
   description: string;
-  content: string;
+  content: {
+    type: 'paragraph' | 'image';
+    content: string;
+    imageAlt?: string;
+  }[];
   coverImage: string;
   publishedAt: string;
   readingTime: string;

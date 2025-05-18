@@ -20,11 +20,11 @@ export const BlogCard = ({ post, index }: BlogCardProps) => {
         transition={{ duration: 0.5, delay: index * 0.1 }}
         viewport={{ once: true }}
         whileHover={{ y: -5 }}
-        className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm cursor-pointer"
+        className="bg-white dark:bg-gray-700 rounded-lg shadow-sm cursor-pointer overflow-hidden"
         onClick={() => setIsModalOpen(true)}
       >
         {post.coverImage && (
-          <div className="relative w-full pt-[56.25%] overflow-hidden rounded-lg mb-6">
+          <div className="relative w-full pt-[56.25%] overflow-hidden">
             <Image
               src={post.coverImage}
               alt={post.title}
@@ -41,8 +41,8 @@ export const BlogCard = ({ post, index }: BlogCardProps) => {
           </div>
         )}
         
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
+        <div className="p-6 space-y-4">
+          <div className="flex items-center gap-2 mb-2">
             <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">
               {post.category}
             </div>
@@ -55,15 +55,15 @@ export const BlogCard = ({ post, index }: BlogCardProps) => {
             </div>
           </div>
           
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
             {post.title}
           </h3>
           
-          <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
-            {post.description}
-          </p>
+          <div className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="line-clamp-3">{post.description}</p>
+          </div>
           
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-4">
             {post.tags.map((tag) => (
               <span
                 key={tag}

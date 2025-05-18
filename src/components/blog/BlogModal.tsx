@@ -73,10 +73,6 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                   {post.title}
                 </Dialog.Title>
 
-                <div className="text-gray-600 dark:text-gray-300 mb-4">
-                  <p>{post.description}</p>
-                </div>
-
                 <div className="flex flex-wrap gap-2 mb-6">
                   {post.tags.map((tag) => (
                     <span
@@ -89,7 +85,32 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                 </div>
 
                 <div className="prose dark:prose-invert max-w-none mb-6">
-                  <div className="whitespace-pre-line">{post.content}</div>
+                  {post.content.map((block, index) => {
+                    if (block.type === 'paragraph') {
+                      return (
+                        <div 
+                          key={index} 
+                          className="whitespace-pre-line"
+                          dangerouslySetInnerHTML={{ 
+                            __html: block.content
+                              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                              .replace(/# (.*?)\n/g, '<h1>$1</h1>')
+                          }} 
+                        />
+                      );
+                    }
+                    return (
+                      <div key={index} className="relative w-full pt-[56.25%] overflow-hidden rounded-lg my-8">
+                        <Image
+                          src={block.content}
+                          alt={block.imageAlt || post.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                          className="object-cover"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <div className="text-sm text-gray-500 dark:text-gray-400 mb-6">
