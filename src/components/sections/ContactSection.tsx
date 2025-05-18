@@ -162,7 +162,7 @@ const ContactSection = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="space-y-8"
             >
-              <div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 mb-6">
                 <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Contact Information</h3>
                 <div className="space-y-4">
                   <p className="flex items-center text-gray-600 dark:text-gray-300">
@@ -181,7 +181,7 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
                 <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Connect with Me</h3>
                 <div className="flex space-x-4">
                   <a
