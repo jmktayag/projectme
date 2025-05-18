@@ -155,10 +155,11 @@ const AboutSection = () => {
         <motion.h2 
           {...fadeInUp}
           viewport={{ once: true }}
-          className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12"
+          className="text-3xl font-extrabold text-center text-gray-900 dark:text-white mb-2"
         >
           About Me
         </motion.h2>
+        <div className="h-1 bg-blue-600 mx-auto mt-4 mb-10" style={{ width: '6.5rem' }}></div>
         {/* Two-column grid layout for content */}
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Left column - About text */}

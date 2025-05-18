@@ -65,9 +65,10 @@ const ContactSection = () => {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-4xl font-extrabold text-center text-gray-900 dark:text-white mb-2">
               Get in Touch
             </h2>
+            <div className="h-1 bg-blue-600 mx-auto mt-4 mb-10" style={{ width: '6.5rem' }}></div>
             <p className="text-lg text-gray-600 dark:text-gray-300">
               Have a question or want to work together? Feel free to reach out!
             </p>

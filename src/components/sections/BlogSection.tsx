@@ -33,9 +33,10 @@ const BlogSection = () => {
     <section id="blog" className="py-20 bg-gray-900 dark:bg-gray-800">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl font-extrabold text-center text-gray-900 dark:text-white mb-2">
             My Blog
           </h2>
+          <div className="h-1 bg-blue-600 mx-auto mt-4 mb-10" style={{ width: '6.5rem' }}></div>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             A collection of my thoughts and insights on web development, programming, and technology.
           </p>
