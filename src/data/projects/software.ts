@@ -56,16 +56,16 @@ export const softwareProjects: Project[] = [
     subtitle: "A playful yet minimalistic portfolio showcasing my diverse projects",
     description: "Designed and developed a playful yet minimalistic personal portfolio to showcase woodworking, cycling vlogs, mobile apps, and writing projects. Built with Next.js, React, TailwindCSS, and TypeScript.",
     technologies: ["Next.js", "React", "TailwindCSS", "TypeScript"],
-    image: "/images/projects/mk-logo.png",
+    image: "/images/projects/hero-screen.png",
     actions: [
       {
         label: "Visit Site",
-        url: "https://jundalisay.com",
+        url: "https://mckeindev.vercel.app/",
         type: "primary"
       },
       {
         label: "Source Code", 
-        url: "https://github.com/jundalisay/portfolio",
+        url: "https://github.com/jmktayag",
         type: "secondary"
       }
     ],
