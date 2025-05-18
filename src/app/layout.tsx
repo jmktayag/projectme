@@ -13,6 +13,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Mc Kein - Portfolio",
   description: "Full-stack developer, woodworker, and avid cyclist who loves to vlog about adventures.",
+  icons: {
+    icon: '/logo/mk-logo_profile.svg',
+    shortcut: '/logo/mk-logo_profile.svg',
+    apple: '/logo/mk-logo_profile.svg',
+  },
 };
 
 // Root layout component that wraps all pages
