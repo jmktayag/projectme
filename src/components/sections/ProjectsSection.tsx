@@ -33,7 +33,7 @@ const ProjectsSection = () => {
   }, []);
 
   return (
-    <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-900">
+    <section id="projects" className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-extrabold text-center text-gray-900 dark:text-white mb-2">
@@ -51,8 +51,8 @@ const ProjectsSection = () => {
             <button
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedCategory === null
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
               }`}
               onClick={() => setSelectedCategory(null)}
             >
@@ -63,8 +63,8 @@ const ProjectsSection = () => {
                 key={category}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
                 }`}
                 onClick={() => setSelectedCategory(category)}
               >
@@ -81,16 +81,16 @@ const ProjectsSection = () => {
             Array.from({ length: 6 }).map((_, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden animate-pulse"
+                className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden animate-pulse"
               >
-                <div className="h-48 bg-gray-300 dark:bg-gray-700"></div>
+                <div className="h-48 bg-gray-200 dark:bg-gray-700"></div>
                 <div className="p-6">
-                  <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
-                  <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-full mb-2"></div>
-                  <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-5/6 mb-4"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 mb-4"></div>
                   <div className="flex gap-2 mb-4">
-                    <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-16"></div>
-                    <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-20"></div>
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-16"></div>
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
                   </div>
                 </div>
               </div>

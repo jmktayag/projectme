@@ -4,8 +4,8 @@
 /* Define theme variables - These control the overall look of the site */
 :root {
   /* Base colors */
-  --background: #0A0B14;  /* Dark navy background */
-  --foreground: #FFFFFF;  /* White text */
+  --background: #FFFFFF;  /* Light background */
+  --foreground: #0A0B14;  /* Dark text */
   
   /* Accent colors */
   --accent-primary: #2563EB;   /* Bright blue */
@@ -14,6 +14,12 @@
   /* Gradient colors */
   --gradient-start: rgba(37, 99, 235, 0.1);  /* Subtle blue */
   --gradient-end: rgba(30, 64, 175, 0.05);   /* Very subtle darker blue */
+}
+
+/* Dark mode variables */
+.dark {
+  --background: #0A0B14;  /* Dark navy background */
+  --foreground: #FFFFFF;  /* White text */
 }
 
 /* Set theme colors and fonts - These variables are used throughout the app */
@@ -31,6 +37,7 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: 'Inter', Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Gradient background for sections */

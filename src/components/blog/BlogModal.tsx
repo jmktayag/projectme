@@ -90,7 +90,7 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                       return (
                         <div 
                           key={index} 
-                          className="whitespace-pre-line"
+                          className="whitespace-pre-line text-gray-600 dark:text-gray-300"
                           dangerouslySetInnerHTML={{ 
                             __html: block.content
                               .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')

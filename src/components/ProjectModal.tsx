@@ -240,7 +240,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                 </div>
 
                 <div className="prose dark:prose-invert max-w-none mb-6">
-                  <p className="whitespace-pre-line">{project.description}</p>
+                  <p className="whitespace-pre-line text-gray-600 dark:text-gray-300">{project.description}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-3 mt-6">
