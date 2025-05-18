@@ -65,24 +65,24 @@ export const RippleButton: React.FC<RippleButtonProps> = ({
 
   // Size classes for different button sizes
   const sizeClasses = {
-    small: 'px-3 py-1 text-sm',
+    small: 'px-3 py-1.5 text-sm',
     medium: 'px-4 py-2',
     large: 'px-6 py-3 text-lg',
   };
 
   // Variant classes for different button styles
   const variantClasses = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    secondary: 'bg-gray-600 text-white hover:bg-gray-700',
-    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50',
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none transition-colors duration-200',
+    secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none transition-colors duration-200',
+    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none transition-colors duration-200',
   };
 
   // Combine all classes for the button
   const buttonClassName = `
-    relative overflow-hidden rounded-md transition-colors duration-200
+    relative overflow-hidden rounded-lg font-medium
     ${sizeClasses[size]}
     ${variantClasses[variant]}
-    ${isLoading ? 'cursor-not-allowed opacity-75' : ''}
+    ${isLoading ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}
     ${className}
   `;
 
