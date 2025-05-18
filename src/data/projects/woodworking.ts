@@ -11,14 +11,9 @@ export const woodworkingProjects: Project[] = [
     actions: [
       {
         label: "View Gallery",
-        url: "https://woodworking-one-demo.com",
+        url: "https://mckeindev.vercel.app/",
         type: "primary"
       },
-      {
-        label: "Order Custom",
-        url: "https://etsy.com/woodworking-one",
-        type: "tertiary"
-      }
     ],
     featured: true,
     category: "Woodworking",

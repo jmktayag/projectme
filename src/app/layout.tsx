@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
 import { DarkModeProvider } from "../context/DarkModeContext";
 
 // Initialize Inter font with Latin subset
@@ -25,7 +26,10 @@ export default function RootLayout({
       <body className={`${inter.className} bg-white dark:bg-gray-900 transition-colors duration-200`}>
         <DarkModeProvider>
           <Navbar />
-          {children}
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
         </DarkModeProvider>
       </body>
     </html>
