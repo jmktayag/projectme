@@ -40,10 +40,10 @@ export const woodworkingProjects: Project[] = [
     subtitle: "A minimalist wooden monitor stand that elevates your workspace with clean lines and natural materials.",
     description: "Custom-built monitor riser designed to improve ergonomics and add a touch of warmth to the workspace. Crafted from solid pine with a natural finish that highlights the wood grain, this piece combines functionality with aesthetic appeal. Features include a raised platform for optimal screen height and a storage compartment underneath for organizing desk essentials.",
     technologies: ["Pine", "Hand Tools", "Natural Finish", "Joinery"],
-    image: "/images/projects/riser1.jpg",
+    image: "/images/projects/monitor-riser1.jpg",
     images: [
-      "/images/projects/riser2.jpg",
-      "/images/projects/riser3.jpg",
+      "/images/projects/monitor-riser2.jpg",
+      "/images/projects/monitor-riser3.jpg",
     ],
     featured: true,
     category: "Woodworking",
