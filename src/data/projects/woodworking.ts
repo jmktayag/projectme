@@ -8,13 +8,6 @@ export const woodworkingProjects: Project[] = [
     description: "A handcrafted hanging shelf made from reclaimed pine wood, showcasing sustainable woodworking practices and rustic design.",
     technologies: ["Pine", "Hand Tools", "Finishing"],
     image: "/images/projects/hanging-shelves.jpg",
-    actions: [
-      {
-        label: "View Gallery",
-        url: "https://mckeindev.vercel.app/",
-        type: "primary"
-      },
-    ],
     featured: true,
     category: "Woodworking",
     projectType: "personal"
@@ -26,13 +19,6 @@ export const woodworkingProjects: Project[] = [
     description: "A set of handcrafted wooden coasters made from smooth pine, designed to bring both function and warmth to your daily rituals. Each coaster is precision-cut and sealed with a natural matte finish to preserve the wood grain and protect against moisture. The set pairs perfectly with any morning brew or cozy corner setup.",
     technologies: ["Pine", "Hand Tools", "Finishing"],
     image: "/images/projects/coaster.jpg",
-    actions: [
-      {
-        label: "View Gallery",
-        url: "https://mckeindev.vercel.app/",
-        type: "primary"
-      },
-    ],
     featured: true,
     category: "Woodworking",
     projectType: "personal"
@@ -44,13 +30,6 @@ export const woodworkingProjects: Project[] = [
     description: "This handcrafted console table blends warm wood tones with a clean white frame for a light and airy indoor accent. Designed with a slatted lower shelf for added storage or styling, the piece works perfectly as an entryway console, a hallway feature, or a cozy corner highlight.",
     technologies: ["Hardwood", "Mortise & Tenon", "Hand Tools", "Wood Finish"],
     image: "/images/projects/console.jpg",
-    actions: [
-      {
-        label: "View Gallery",
-        url: "https://mckeindev.vercel.app/",
-        type: "primary"
-      },
-    ],
     featured: true,
     category: "Woodworking",
     projectType: "personal"
@@ -65,13 +44,6 @@ export const woodworkingProjects: Project[] = [
     images: [
       "/images/projects/riser2.jpg",
       "/images/projects/riser3.jpg",
-    ],
-    actions: [
-      {
-        label: "View Gallery",
-        url: "https://mckeindev.vercel.app/",
-        type: "primary"
-      }
     ],
     featured: true,
     category: "Woodworking",
