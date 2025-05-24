@@ -38,7 +38,7 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
                 {/* Cover Image */}
                 {post.coverImage && (
                   <div className="relative w-full pt-[56.25%] overflow-hidden rounded-lg mb-6 bg-black">
@@ -54,10 +54,10 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                 )}
 
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                  <div className="text-sm text-blue-400 font-medium">
                     {post.category}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-gray-400">
                     {new Date(post.publishedAt).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -68,7 +68,7 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
 
                 <Dialog.Title
                   as="h3"
-                  className="text-2xl font-bold leading-6 text-gray-900 dark:text-white mb-2"
+                  className="text-2xl font-bold leading-6 text-white mb-2"
                 >
                   {post.title}
                 </Dialog.Title>
@@ -77,7 +77,7 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
+                      className="px-3 py-1 bg-blue-900 text-blue-200 rounded-full text-sm"
                     >
                       {tag}
                     </span>
@@ -90,7 +90,7 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                       return (
                         <div 
                           key={index} 
-                          className="whitespace-pre-line text-gray-600 dark:text-gray-300"
+                          className="whitespace-pre-line text-gray-300"
                           dangerouslySetInnerHTML={{ 
                             __html: block.content
                               .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -113,7 +113,7 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                   })}
                 </div>
 
-                <div className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                <div className="text-sm text-gray-400 mb-6">
                   {post.readingTime}
                 </div>
 
@@ -121,7 +121,7 @@ const BlogModal = ({ post, isOpen, onClose }: BlogModalProps) => {
                 <div className="mt-6 flex justify-end">
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-gray-700 px-4 py-2 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
                     onClick={onClose}
                   >
                     Close

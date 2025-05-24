@@ -125,10 +125,10 @@ const SkillIcon = ({ icon: Icon, name, color }: SkillIconProps) => (
 const SkillCard = ({ title, description, skills }: SkillCardProps) => (
   <motion.div 
     whileHover={{ y: -5 }}
-    className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm"
+    className="bg-gray-700 p-6 rounded-lg shadow-sm"
   >
-    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
-    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{description}</p>
+    <h3 className="text-xl font-semibold text-white mb-4">{title}</h3>
+    <p className="text-sm text-gray-300 mb-4">{description}</p>
     <div className="flex flex-wrap gap-4">
       {skills.map((skill, index) => (
         <SkillIcon key={index} {...skill} />
@@ -147,7 +147,7 @@ const AboutSection = () => {
     // Main section container with responsive padding and background colors
     <section 
       id="about" 
-      className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800"
+      className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gray-800"
       aria-label="About Me"
     >
       <div className="max-w-7xl mx-auto">
@@ -155,7 +155,7 @@ const AboutSection = () => {
         <motion.h2 
           {...fadeInUp}
           viewport={{ once: true }}
-          className="text-3xl font-extrabold text-center text-gray-900 dark:text-white mb-2"
+          className="text-3xl font-extrabold text-center text-white mb-2"
         >
           About Me
         </motion.h2>
@@ -179,16 +179,16 @@ const AboutSection = () => {
             </div>
             
             <div className="prose dark:prose-invert max-w-none">
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-300">
                 I&apos;m Mc Kein Tayag — a curious creator passionate about building meaningful digital and physical experiences.
               </p>
               <br />
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-300">
                 From designing seamless mobile apps to handcrafting furniture and biking through heritage trails, 
                 I blend creativity, logic, and exploration in everything I do.
               </p>
               <br />
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-300">
                 I believe great design is both functional and delightful.
               </p>
             </div>

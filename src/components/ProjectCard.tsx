@@ -62,7 +62,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         viewport={{ once: true }}
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+        className="bg-gray-800 rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
         <div className="relative w-full pt-[56.25%] overflow-hidden">
@@ -84,23 +84,23 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         
         <div className="p-6">
           <div className="flex items-center gap-2 mb-2">
-            <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+            <div className="text-sm text-blue-400 font-medium">
               {project.category}
             </div>
             <div className={`text-xs px-2 py-0.5 rounded-full ${
               project.projectType === 'professional' 
-                ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' 
-                : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                ? 'bg-purple-900 text-purple-200' 
+                : 'bg-green-900 text-green-200'
             }`}>
               {project.projectType === 'professional' ? 'Professional' : 'Personal'}
             </div>
           </div>
           
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-xl font-semibold text-white mb-2">
             {project.title}
           </h3>
           
-          <div className="text-gray-600 dark:text-gray-300 mb-4">
+          <div className="text-gray-300 mb-4">
             <p className="line-clamp-3">{project.subtitle}</p>
           </div>
           
@@ -108,7 +108,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
             {project.technologies.map((tech: string) => (
               <span
                 key={tech}
-                className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
+                className="px-3 py-1 bg-blue-900 text-blue-200 rounded-full text-sm"
               >
                 {tech}
               </span>
