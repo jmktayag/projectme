@@ -15,10 +15,9 @@ export const BlogCard = ({ post, index }: BlogCardProps) => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        viewport={{ once: true }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: index * 0.1 }}
         whileHover={{ y: -5 }}
         className="bg-gray-700 rounded-lg shadow-sm cursor-pointer overflow-hidden"
         onClick={() => setIsModalOpen(true)}
