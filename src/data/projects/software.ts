@@ -40,13 +40,7 @@ export const softwareProjects: Project[] = [
       "Security"
     ],
     image: "/images/projects/banking-app.png",
-    actions: [
-      {
-        label: "Case Study",
-        url: "#",
-        type: "primary"
-      }
-    ],
+    actions: [],
     category: "Software Development",
     projectType: "professional"
   },
@@ -102,7 +96,7 @@ export const softwareProjects: Project[] = [
     actions: [
       {
         label: "Learn More",
-        url: "#",
+        url: "https://apps.apple.com/us/app/cl-site-master/id1367180561",
         type: "primary"
       }
     ],

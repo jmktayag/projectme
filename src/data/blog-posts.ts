@@ -44,7 +44,7 @@ export const blogPosts: BlogPost[] = [
       }
     ],
     coverImage: '/images/blog/tree.png',
-    publishedAt: '2024-03-25T00:00:00.000Z',
+    publishedAt: '2025-03-25T00:00:00.000Z',
     readingTime: '6 min read',
     tags: ['Productivity', 'Focus', 'Apps', 'Wellness', 'Work-Life Balance'],
     category: 'Productivity',
@@ -89,7 +89,7 @@ export const blogPosts: BlogPost[] = [
       }
     ],
     coverImage: '/images/blog/mastering.png',
-    publishedAt: '2024-03-20T09:00:00Z',
+    publishedAt: '2025-03-20T09:00:00Z',
     readingTime: '6 min read',
     tags: ['AI', 'ChatGPT', 'Productivity', 'Technology', 'Writing'],
     category: 'Software Development'
